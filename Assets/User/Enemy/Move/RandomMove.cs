@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RandomMove : MovePattern
 {
@@ -25,7 +23,7 @@ public class RandomMove : MovePattern
             // ランダムな座標を目標に設定
             float height = Camera.main.orthographicSize; // 画面の縦幅を計算
             float width = height * Camera.main.aspect; // 画面の横幅を計算
-            randomMoveGoal = new Vector3(Random.Range(width * -1f, width), Random.Range(height * -1f, height), ILayoutSelfController.position.z); // 画面内のランダムな座標
+            randomMoveGoal = new Vector3(Random.Range(width * -1f, width), Random.Range(height * -1f, height), self.position.z); // 画面内のランダムな座標
             isRandomMoving = true;
         }
     }
