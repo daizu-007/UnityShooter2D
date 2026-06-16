@@ -1,20 +1,38 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 
 public class PlayerBulletSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab; // 弾のプレハブ
+    [SerializeField] private BulletController bulletPrefab; // 弾のプレハブ
     [SerializeField] private float fireRate; // 連射間隔（秒）
 
     private PlayerInput playerInput;
     private InputAction fireAction;
     private bool isFiring; // 発射ボタンが押されているか
     private float lastFireTime; // 最後に発射した時間
+    private ObjectPool<BulletController> pool;
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         fireAction = playerInput.actions["Fire"];
+        pool = new ObjectPool<BulletController>(
+            // プールが空で新しく作るとき
+            createFunc: () =>
+            {
+                BulletController bullet = Instantiate(bulletPrefab);
+                bullet.SetPool(pool); // プールの参照を渡す
+                return bullet;
+            },
+            // プールから取り出すとき
+            actionOnGet: (bullet) => bullet.gameObject.SetActive(true),
+            // プールに戻すとき
+            actionOnRelease: (bullet) => bullet.gameObject.SetActive(false),
+            // 破棄するとき
+            actionOnDestroy: (bullet) => Destroy(bullet.gameObject),
+            defaultCapacity: 10
+        );
     }
     
     // オブジェクトがゲーム内で有効になったとき
@@ -51,7 +69,8 @@ public class PlayerBulletSpawner : MonoBehaviour
         // 弾を発射
         if (isFiring && Time.time >= lastFireTime + fireRate)
         {
-            Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+            BulletController bullet = pool.Get();
+            bullet.transform.position = this.transform.position;
             lastFireTime = Time.time;
         }
     }

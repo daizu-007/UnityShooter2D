@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class BulletController : MonoBehaviour
 {
     [SerializeField] private float speed;
+    private IObjectPool<BulletController> pool;
+    public void SetPool(IObjectPool<BulletController> pool)
+    {
+        this.pool = pool;
+    }
 
     void Update()
     {
@@ -10,7 +16,7 @@ public class BulletController : MonoBehaviour
         float topBound = Camera.main.orthographicSize + 1f; // 画面上端+オーバーランで削除
         if (this.transform.position.y > topBound)
         {
-            Destroy(this.gameObject);
+            pool.Release(this);
         }
     }
 }

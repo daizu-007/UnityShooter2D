@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2706b63ce16ed4dba29253ae48ef17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBulletSpawner
-  bulletPrefab: {fileID: 8684581965989109976, guid: 4044fc8386679344d9afe053bfe48dc8, type: 3}
+  bulletPrefab: {fileID: 7160716318534032512, guid: 4044fc8386679344d9afe053bfe48dc8, type: 3}
   fireRate: 0.1
 --- !u!1 &619394800
 GameObject:
