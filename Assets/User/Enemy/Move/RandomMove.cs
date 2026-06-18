@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "RandomMove", menuName = "EnemyPatterns/RandomMove")]
 public class RandomMove : MovePattern
 {
     [SerializeField] private float moveSpeed;

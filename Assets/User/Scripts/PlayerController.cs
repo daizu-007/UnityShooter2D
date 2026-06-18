@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour{
+    [SerializeField] private float hp; // プレイヤーの体力
     [SerializeField] private float moveSpeed; // プレイヤーの移動速度
     [SerializeField] private float screenPadding; // 画面端からのオフセット（プレイヤーが見切れない用）
     private Vector2 clampedMoveInput;
@@ -42,5 +43,20 @@ public class PlayerController : MonoBehaviour{
         newPos.y = Mathf.Clamp(newPos.y, -maxHeight, maxHeight);
 
         this.transform.position = newPos;
+    }
+
+    void Die()
+    {
+        // プレイヤーオブジェクトを破壊
+        Destroy(this.gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Die();
+        }
     }
 }

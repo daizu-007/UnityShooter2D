@@ -12,7 +12,7 @@ public abstract class ShotPattern : ScriptableObject
 
 public class EnemyBase : MonoBehaviour
 {
-    [SerializeField] protected int hp;
+    [SerializeField] protected float hp;
     [SerializeField] private MovePattern movePattern;
     [SerializeField] private ShotPattern shotPattern;
 
@@ -22,7 +22,19 @@ public class EnemyBase : MonoBehaviour
         shotPattern?.Tick(transform);
     }
 
-    public void TakeDamage(int dmg) { /* 共通の被弾処理 */ }
+    void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
 
 
 }
