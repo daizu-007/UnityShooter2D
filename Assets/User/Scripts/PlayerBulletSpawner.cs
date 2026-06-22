@@ -10,7 +10,7 @@ public class PlayerBulletSpawner : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction fireAction;
     private bool isFiring; // 発射ボタンが押されているか
-    private float lastFireTime; // 最後に発射した時間
+    private float lastFireTime = 0f; // 最後に発射した時間
     private ObjectPool<BulletController> pool;
 
     void Awake()
@@ -31,7 +31,7 @@ public class PlayerBulletSpawner : MonoBehaviour
             actionOnRelease: (bullet) => bullet.gameObject.SetActive(false),
             // 破棄するとき
             actionOnDestroy: (bullet) => Destroy(bullet.gameObject),
-            defaultCapacity: 10
+            defaultCapacity: 30
         );
     }
     
@@ -56,14 +56,6 @@ public class PlayerBulletSpawner : MonoBehaviour
     {
         isFiring = true;
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         // 弾を発射

@@ -3,11 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RandomMove", menuName = "EnemyPatterns/RandomMove")]
 public class RandomMove : MovePattern
 {
-    [SerializeField] private float moveSpeed;
     private bool isRandomMoving = false;
     private Vector3 randomMoveGoal;
 
-    public override void Tick(Transform self)
+    public override void Tick(Transform self, float moveSpeed)
     {
         if (isRandomMoving)
         {
