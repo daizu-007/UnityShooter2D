@@ -8,7 +8,7 @@ public abstract class MovePattern : ScriptableObject
 
 public abstract class ShotPattern : ScriptableObject
 {
-    public abstract void Tick(Transform self, float bulletSpeed, IObjectPool<BulletBase> pool, float fireRate);
+    public abstract void Fire(Transform self, float bulletSpeed, IObjectPool<BulletBase> pool);
 }
 
 public class EnemyBase : MonoBehaviour
@@ -21,6 +21,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private ShotPattern shotPattern;
     [SerializeField] private BulletBase bulletPrefab;
     private ObjectPool<BulletBase> pool;
+    private float lastShotTime = 0f;
     void Awake()
     {
         pool = new ObjectPool<BulletBase>(
@@ -32,7 +33,11 @@ public class EnemyBase : MonoBehaviour
                 return bullet;
             },
             // プールから取り出すとき
-            actionOnGet: (bullet) => bullet.gameObject.SetActive(true),
+            actionOnGet: (bullet) => 
+            {
+                bullet.gameObject.SetActive(true); 
+                bullet.Initialize(bulletSpeed); // 弾の初期化
+            },
             // プールに戻すとき
             actionOnRelease: (bullet) => bullet.gameObject.SetActive(false),
             // 破棄するとき
@@ -40,10 +45,16 @@ public class EnemyBase : MonoBehaviour
             defaultCapacity: 30
         );
     }
+
     protected virtual void Update()
     {
         movePattern?.Tick(transform, moveSpeed);
-        shotPattern?.Tick(transform, bulletSpeed, pool, fireRate);
+
+        if (Time.time >= lastShotTime + fireRate)
+        {
+            shotPattern?.Fire(transform, bulletSpeed, pool);
+            lastShotTime = Time.time;
+        }
     }
 
     void Die()

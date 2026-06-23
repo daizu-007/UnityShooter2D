@@ -4,16 +4,11 @@ using UnityEngine.Pool;
 [CreateAssetMenu(fileName = "DownSingleShot", menuName = "EnemyPatterns/DownSingleShot")]
 public class DownSingleShot : ShotPattern
 {
-    private float lastShotTime = 0f;
-    public override void Tick(Transform self, float bulletSpeed, IObjectPool<BulletBase> pool, float fireRate)
+    public override void Fire(Transform self, float bulletSpeed, IObjectPool<BulletBase> pool)
     {
-        if (Time.time >= lastShotTime + fireRate)
-        {
-            // 画面下に向かって弾を発射
-            Vector3 bulletSpawnPosition = self.position + Vector3.down * 0.5f; // 弾の発射位置を調整
-            BulletBase bullet = pool.Get(); // プールから弾を取得
-            bullet.transform.position = bulletSpawnPosition;
-            lastShotTime = Time.time;
-        }
+        // 画面下に向かって弾を発射
+        Vector3 bulletSpawnPosition = self.position + Vector3.down * 0.5f; // 弾の発射位置を調整
+        BulletBase bullet = pool.Get(); // プールから弾を取得
+        bullet.transform.position = bulletSpawnPosition;
     }
 }
