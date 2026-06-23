@@ -22,10 +22,8 @@ public class BulletBase : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("弾が何かに当たった");
         if (other.CompareTag("Player"))
         {
-            Debug.Log("弾がプレイヤーに当たった");
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
             {
