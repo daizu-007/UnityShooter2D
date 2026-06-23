@@ -35,5 +35,12 @@ public class BulletBase : MonoBehaviour
     protected virtual void Update()
     {
         bulletPattern.Tick(transform, speed);
+        // 画面外から出たら削除する
+        float height = Camera.main.orthographicSize; // 画面の縦幅を計算
+        float width = height * Camera.main.aspect; // 画面の横幅を計算
+        if (transform.position.x < -width || transform.position.x > width || transform.position.y < -height || transform.position.y > height)
+        {
+            pool.Release(this);
+        }
     }
 }

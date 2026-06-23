@@ -27,8 +27,10 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         this.transform.position += (Vector3)(Vector2.up * speed * Time.deltaTime);
-        float topBound = Camera.main.orthographicSize + 1f; // 画面上端+オーバーランで削除
-        if (this.transform.position.y > topBound)
+        // 画面外から出たら削除する
+        float height = Camera.main.orthographicSize; // 画面の縦幅を計算
+        float width = height * Camera.main.aspect; // 画面の横幅を計算
+        if (transform.position.x < -width || transform.position.x > width || transform.position.y < -height || transform.position.y > height)
         {
             pool.Release(this);
         }
