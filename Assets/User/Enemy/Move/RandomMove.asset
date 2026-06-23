@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a59e3a05e0c81b4bb846ca0e6fabce2, type: 3}
   m_Name: RandomMove
   m_EditorClassIdentifier: Assembly-CSharp::RandomMove
-  moveSpeed: 1

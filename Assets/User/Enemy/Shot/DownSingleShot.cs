@@ -10,5 +10,6 @@ public class DownSingleShot : ShotPattern
         Vector3 bulletSpawnPosition = self.position + Vector3.down * 0.5f; // 弾の発射位置を調整
         BulletBase bullet = pool.Get(); // プールから弾を取得
         bullet.transform.position = bulletSpawnPosition;
+        bullet.transform.up = Vector3.down;
     }
 }

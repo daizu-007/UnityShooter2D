@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
+public interface IMover
+{
+    void Tick(Transform self, float moveSpeed);
+}
 public abstract class MovePattern : ScriptableObject
 {
-    public abstract void Tick(Transform self, float moveSpeed);
+    public abstract IMover CreateMover();
 }
 
 public abstract class ShotPattern : ScriptableObject
@@ -22,8 +26,10 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private BulletBase bulletPrefab;
     private ObjectPool<BulletBase> pool;
     private float lastShotTime = 0f;
+    private IMover mover;
     void Awake()
     {
+        mover = movePattern.CreateMover();
         pool = new ObjectPool<BulletBase>(
             // プールが空で新しく作るとき
             createFunc: () =>
@@ -48,7 +54,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        movePattern?.Tick(transform, moveSpeed);
+        mover.Tick(transform, moveSpeed);
 
         if (Time.time >= lastShotTime + fireRate)
         {
