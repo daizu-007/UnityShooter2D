@@ -29,7 +29,6 @@ public class EnemyBase : MonoBehaviour
     private IMover mover;
     void Awake()
     {
-        mover = movePattern.CreateMover();
         pool = new ObjectPool<BulletBase>(
             // プールが空で新しく作るとき
             createFunc: () =>
@@ -77,5 +76,15 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-
+    public void Initialize(float hp, float moveSpeed, float bulletSpeed, float fireRate, MovePattern movePattern, ShotPattern shotPattern, BulletBase bulletPrefab)
+    {
+        this.hp = hp;
+        this.moveSpeed = moveSpeed;
+        this.bulletSpeed = bulletSpeed;
+        this.fireRate = fireRate;
+        this.movePattern = movePattern;
+        this.shotPattern = shotPattern;
+        this.bulletPrefab = bulletPrefab;
+        mover = this.movePattern.CreateMover();
+    }
 }

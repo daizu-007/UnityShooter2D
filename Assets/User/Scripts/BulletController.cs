@@ -13,13 +13,10 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        // タグ設定に依存せず、EnemyBase コンポーネントの有無で判定する
+        if (other.TryGetComponent<EnemyBase>(out var enemy))
         {
-            EnemyBase enemy = other.GetComponent<EnemyBase>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage); // 敵にダメージを与える
-            }
+            enemy.TakeDamage(damage); // 敵にダメージを与える
             pool.Release(this); // 弾をプールに戻す
         }
     }
