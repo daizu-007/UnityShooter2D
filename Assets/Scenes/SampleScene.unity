@@ -175,6 +175,18 @@ MonoBehaviour:
   bulletPrefabs:
   - {fileID: 7452756667899886748, guid: ec9efe0a77f30f54080c38a709bd072f, type: 3}
   - {fileID: 8782934161278508234, guid: d47cb1dda5c59e146879f968fd1dc90b, type: 3}
+  hpRange:
+    min: 30
+    max: 100
+  speedRange:
+    min: 0.5
+    max: 3
+  bulletSpeedRange:
+    min: 5
+    max: 20
+  fireRateRange:
+    min: 0.1
+    max: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
