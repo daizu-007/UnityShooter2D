@@ -38,6 +38,7 @@ public class GameCotroller : MonoBehaviour
     void Start()
     {
         lastSpawnTime = Time.time;
+        SpawnEnemy();
     }
 
     void Update()
