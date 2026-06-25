@@ -6,9 +6,27 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float damage;
     private IObjectPool<BulletController> pool;
+    private bool isReleased;
+
     public void SetPool(IObjectPool<BulletController> pool)
     {
         this.pool = pool;
+    }
+
+    void OnEnable()
+    {
+        isReleased = false;
+    }
+
+    void Despawn()
+    {
+        if (isReleased || pool == null)
+        {
+            return;
+        }
+
+        isReleased = true;
+        pool.Release(this);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -17,7 +35,7 @@ public class BulletController : MonoBehaviour
         if (other.TryGetComponent<EnemyBase>(out var enemy))
         {
             enemy.TakeDamage(damage); // 敵にダメージを与える
-            pool.Release(this); // 弾をプールに戻す
+            Despawn(); // 弾をプールに戻す
         }
     }
 
@@ -29,7 +47,7 @@ public class BulletController : MonoBehaviour
         float width = height * Camera.main.aspect; // 画面の横幅を計算
         if (transform.position.x < -width || transform.position.x > width || transform.position.y < -height || transform.position.y > height)
         {
-            pool.Release(this);
+            Despawn();
         }
     }
 }

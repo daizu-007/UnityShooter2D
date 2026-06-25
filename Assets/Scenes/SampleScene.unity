@@ -163,6 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b89d5eb9b1eb7242bbbd7d9d8c159c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameCotroller
+  maxEnemyCount: 5
+  minSpawnInterval: 10
+  maxSpawnInterval: 60
   enemyPrefab: {fileID: 2021374195291299652, guid: 47395bb433aceb942a062b8e8fc63e87, type: 3}
   movePatterns:
   - {fileID: 11400000, guid: f0d929a35d0f10e46bc37614acdee33c, type: 2}

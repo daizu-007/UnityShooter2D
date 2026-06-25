@@ -86,5 +86,6 @@ public class EnemyBase : MonoBehaviour
         this.shotPattern = shotPattern;
         this.bulletPrefab = bulletPrefab;
         mover = this.movePattern.CreateMover();
+        this.gameObject.tag = "Enemy";
     }
 }
