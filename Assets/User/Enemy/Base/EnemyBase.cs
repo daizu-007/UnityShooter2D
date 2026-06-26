@@ -60,6 +60,10 @@ public class EnemyBase : MonoBehaviour
             shotPattern?.Fire(transform, bulletSpeed, pool);
             lastShotTime = Time.time;
         }
+
+        // HPに応じて色を変える
+        Color color = Color.Lerp(Color.red, Color.green, hp / 100f); // HPが0のとき赤、100のとき緑
+        GetComponent<SpriteRenderer>().color = color;
     }
 
     void Die()
