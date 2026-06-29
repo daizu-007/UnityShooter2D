@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour{
     [SerializeField] private float hp; // プレイヤーの体力
     [SerializeField] private float moveSpeed; // プレイヤーの移動速度
     [SerializeField] private float screenPadding; // 画面端からのオフセット（プレイヤーが見切れない用）
+    [SerializeField] private TMPro.TMP_Text hpText;
     private Vector2 clampedMoveInput;
     private float maxHeight;
     private float maxWidth;
@@ -12,6 +13,11 @@ public class PlayerController : MonoBehaviour{
     void Start()
     {
         UpdateBounds(); // 初回の画面範囲を設定
+
+        if (hpText != null)
+        {
+            hpText.text = $"HP: {hp}";
+        }
     }
 
     // 入力時
@@ -47,13 +53,23 @@ public class PlayerController : MonoBehaviour{
 
     void Die()
     {
-        // プレイヤーオブジェクトを破壊
-        Destroy(this.gameObject);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameFinish();
+        }
+        else
+        {
+            Debug.LogWarning("GameManager が存在しません");
+        }
     }
 
     public void TakeDamage(float damage)
     {
         hp -= damage;
+        if (hpText != null)
+        {
+            hpText.text = $"HP: {hp}";
+        }
         if (hp <= 0)
         {
             Die();
