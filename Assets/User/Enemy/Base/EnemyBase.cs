@@ -68,6 +68,7 @@ public class EnemyBase : MonoBehaviour
 
     void Die()
     {
+        GameManager.Instance.Score += 10; // 得点を加算
         Destroy(this.gameObject);
     }
 
