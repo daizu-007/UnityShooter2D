@@ -42,4 +42,8 @@ public class GameManager : MonoBehaviour
         }
         SceneManager.LoadScene("ScoreScene");
     }
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene("TitleScene");
+    }
 }
